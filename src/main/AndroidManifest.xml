@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="org.havenapp.main">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -49,6 +48,7 @@
         <activity
             android:name=".ListActivity"
             android:configChanges="orientation|screenSize"
+            android:exported="true"
             android:label="@string/title_activity_start"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
@@ -117,7 +117,8 @@
             android:screenOrientation="fullUser"
             android:configChanges="orientation|screenSize|keyboardHidden" />
 
-        <receiver android:name=".sensors.PowerConnectionReceiver">
+        <receiver android:name=".sensors.PowerConnectionReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
                 <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
