@@ -82,8 +82,6 @@ public class MicSamplerTask extends AsyncTask<Void,Object,Void> {
 					sampling = true;
 				} catch (IllegalStateException e) {
 					Log.d("MicSamplerTask","Failed to start",e);
-				} catch (IOException e) {
-					Log.d("MicSamplerTask","Failed to start",e);
 				}
 			}
 			if (isCancelled()) { volumeMeter.stop(); sampling = false; return null; }

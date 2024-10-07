@@ -27,7 +27,6 @@ import me.angrybyte.numberpicker.view.ActualNumberPicker;
 public class AccelConfigureActivity extends AppCompatActivity implements SensorEventListener {
 
     private TextView mTextLevel;
-    private ActualNumberPicker mNumberTrigger;
     private PreferenceManager mPrefManager;
     private SimpleWaveformExtended mWaveform;
     private LinkedList<Integer> mWaveAmpList;
@@ -42,25 +41,19 @@ public class AccelConfigureActivity extends AppCompatActivity implements SensorE
     private long lastUpdate = -1;
 
     /**
-     * Current accelerometer values
-     */
-    private float accel_values[];
-
-    /**
      * Last accelerometer values
      */
     private float last_accel_values[];
 
 
     private float mAccelCurrent =  SensorManager.GRAVITY_EARTH;
-    private float mAccelLast = SensorManager.GRAVITY_EARTH;
     private float mAccel = 0.00f;
 
 
     /**
      * Text showing accelerometer values
      */
-    private int maxAlertPeriod = 30;
+    private final int maxAlertPeriod = 30;
     private int remainingAlertPeriod = 0;
     private boolean alert = false;
     private final static int CHECK_INTERVAL = 100;
@@ -79,7 +72,7 @@ public class AccelConfigureActivity extends AppCompatActivity implements SensorE
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mTextLevel = findViewById(R.id.text_display_level);
-        mNumberTrigger = findViewById(R.id.number_trigger_level);
+        ActualNumberPicker mNumberTrigger = findViewById(R.id.number_trigger_level);
         mWaveform = findViewById(R.id.simplewaveform);
         mWaveform.setMaxVal(MAX_SLIDER_VALUE);
 
@@ -205,7 +198,10 @@ public class AccelConfigureActivity extends AppCompatActivity implements SensorE
                 long diffTime = (curTime - lastUpdate);
                 lastUpdate = curTime;
 
-                accel_values = event.values.clone();
+                /**
+                 * Current accelerometer values
+                 */
+                float[] accel_values = event.values.clone();
 
                 if (alert && remainingAlertPeriod > 0) {
                     remainingAlertPeriod = remainingAlertPeriod - 1;
@@ -215,9 +211,9 @@ public class AccelConfigureActivity extends AppCompatActivity implements SensorE
 
                 if (last_accel_values != null) {
 
-                    mAccelLast = mAccelCurrent;
-                    mAccelCurrent =(float)Math.sqrt(accel_values[0]* accel_values[0] + accel_values[1]*accel_values[1]
-                            + accel_values[2]*accel_values[2]);
+                    float mAccelLast = mAccelCurrent;
+                    mAccelCurrent =(float)Math.sqrt(accel_values[0]* accel_values[0] + accel_values[1]* accel_values[1]
+                            + accel_values[2]* accel_values[2]);
                     float delta = mAccelCurrent - mAccelLast;
                     mAccel = (mAccel * 0.9f + delta);
 
@@ -263,10 +259,8 @@ public class AccelConfigureActivity extends AppCompatActivity implements SensorE
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
+        if (item.getItemId() == android.R.id.home) {
+            finish();
         }
         return true;
     }

@@ -26,12 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class AccelerometerMonitor implements SensorEventListener {
 
     // For shake motion detection.
-    private SensorManager sensorMgr;
-
-    /**
-     * Accelerometer sensor
-     */
-    private Sensor accelerometer;
+    private final SensorManager sensorMgr;
 
     /**
      * Last update of the accelerometer
@@ -39,19 +34,9 @@ public class AccelerometerMonitor implements SensorEventListener {
     private long lastUpdate = -1;
 
     /**
-     * Current accelerometer values
-     */
-    private float accel_values[];
-
-    /**
      * Last accelerometer values
      */
     private float last_accel_values[];
-
-    /**
-     * Data field used to retrieve application prefences
-     */
-    private PreferenceManager prefs;
 
     /**
      * Shake threshold
@@ -59,18 +44,16 @@ public class AccelerometerMonitor implements SensorEventListener {
     private int shakeThreshold = -1;
 
     private float mAccelCurrent =  SensorManager.GRAVITY_EARTH;
-    private float mAccelLast = SensorManager.GRAVITY_EARTH;
     private float mAccel = 0.00f;
-    /**
-     * Text showing accelerometer values
-     */
-    private int maxAlertPeriod = 30;
     private int remainingAlertPeriod = 0;
     private boolean alert = false;
     private final static int CHECK_INTERVAL = 100;
 
     public AccelerometerMonitor(Context context) {
-        prefs = new PreferenceManager(context);
+        /**
+         * Data field used to retrieve application prefences
+         */
+        PreferenceManager prefs = new PreferenceManager(context);
 
 		/*
 		 * Set sensitivity value
@@ -87,7 +70,10 @@ public class AccelerometerMonitor implements SensorEventListener {
                 MonitorService.class), mConnection, Context.BIND_ABOVE_CLIENT);
 
         sensorMgr = (SensorManager) context.getSystemService(AppCompatActivity.SENSOR_SERVICE);
-        accelerometer = sensorMgr.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        /**
+         * Accelerometer sensor
+         */
+        Sensor accelerometer = sensorMgr.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
         if (accelerometer == null) {
             Log.i("AccelerometerFrament", "Warning: no accelerometer");
@@ -110,7 +96,10 @@ public class AccelerometerMonitor implements SensorEventListener {
                 long diffTime = (curTime - lastUpdate);
                 lastUpdate = curTime;
 
-                accel_values = event.values.clone();
+                /**
+                 * Current accelerometer values
+                 */
+                float[] accel_values = event.values.clone();
 
                 if (alert && remainingAlertPeriod > 0) {
                     remainingAlertPeriod = remainingAlertPeriod - 1;
@@ -120,15 +109,9 @@ public class AccelerometerMonitor implements SensorEventListener {
 
                 if (last_accel_values != null) {
 
-                    /**
-                    float speed = Math.abs(
-                            accel_values[0] + accel_values[1] + accel_values[2] -
-                                    last_accel_values[0] + last_accel_values[1] + last_accel_values[2])
-                            / diffTime * 1000;
-                    **/
-                    mAccelLast = mAccelCurrent;
-                    mAccelCurrent =(float)Math.sqrt(accel_values[0]* accel_values[0] + accel_values[1]*accel_values[1]
-                            + accel_values[2]*accel_values[2]);
+                    float mAccelLast = mAccelCurrent;
+                    mAccelCurrent =(float)Math.sqrt(accel_values[0]* accel_values[0] + accel_values[1]* accel_values[1]
+                            + accel_values[2]* accel_values[2]);
                     float delta = mAccelCurrent - mAccelLast;
                     mAccel = mAccel * 0.9f + delta;
 
@@ -138,6 +121,10 @@ public class AccelerometerMonitor implements SensorEventListener {
 						 */
 
                         alert = true;
+                        /**
+                         * Text showing accelerometer values
+                         */
+                        int maxAlertPeriod = 30;
                         remainingAlertPeriod = maxAlertPeriod;
 
                         Message message = new Message();
@@ -166,7 +153,7 @@ public class AccelerometerMonitor implements SensorEventListener {
 
     private Messenger serviceMessenger = null;
 
-    private ServiceConnection mConnection = new ServiceConnection() {
+    private final ServiceConnection mConnection = new ServiceConnection() {
 
         public void onServiceConnected(ComponentName className,
                                        IBinder service) {

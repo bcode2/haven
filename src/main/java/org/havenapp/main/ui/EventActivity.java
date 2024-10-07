@@ -1,20 +1,16 @@
 package org.havenapp.main.ui;
 
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.TextUtils;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.stfalcon.imageviewer.StfalconImageViewer;
 
-import org.apache.http.client.utils.URIBuilder;
 import org.havenapp.main.R;
 import org.havenapp.main.Utils;
 import org.havenapp.main.database.HavenEventDB;
@@ -35,7 +31,6 @@ import java.util.Locale;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.FileProvider;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -48,18 +43,17 @@ public class EventActivity extends AppCompatActivity implements EventTriggerAdap
     private Event mEvent;
     private List<EventTrigger> eventTriggerList = new ArrayList<>();
     private EventTriggerAdapter mAdapter;
-    private Toolbar toolbar;
 
     private ArrayList<Uri> eventTriggerImagePaths;
     //private final static String AUTHORITY = "org.havenapp.main.fileprovider";
 
-    private Observer<Event> eventObserver = event -> {
+    private final Observer<Event> eventObserver = event -> {
         if (event != null) {
             onEventFetched(event);
         }
     };
 
-    private Observer<List<EventTrigger>> eventTriggerListObserver = eventTriggerList -> {
+    private final Observer<List<EventTrigger>> eventTriggerListObserver = eventTriggerList -> {
         if (eventTriggerList != null) {
             onEventTriggerListFetched(eventTriggerList);
         }
@@ -70,7 +64,7 @@ public class EventActivity extends AppCompatActivity implements EventTriggerAdap
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -100,13 +94,11 @@ public class EventActivity extends AppCompatActivity implements EventTriggerAdap
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     /**

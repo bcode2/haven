@@ -1,9 +1,5 @@
 package org.havenapp.main.sensors;
 
-/**
- * Created by n8fr8 on 3/10/17.
- */
-
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -28,11 +24,6 @@ public final class MicrophoneMonitor implements MicSamplerTask.MicListener {
     private MicSamplerTask microphone;
 
     /**
-     * Object used to fetch application dependencies
-     */
-    private PreferenceManager prefs;
-
-    /**
      * Threshold for the decibels sampled
      */
     private double mNoiseThreshold = 70.0;
@@ -42,9 +33,9 @@ public final class MicrophoneMonitor implements MicSamplerTask.MicListener {
      */
     private Messenger serviceMessenger = null;
 
-    private Context context;
+    private final Context context;
 
-    private ServiceConnection mConnection = new ServiceConnection() {
+    private final ServiceConnection mConnection = new ServiceConnection() {
 
         public void onServiceConnected(ComponentName className,
                                        IBinder service) {
@@ -64,7 +55,10 @@ public final class MicrophoneMonitor implements MicSamplerTask.MicListener {
     {
         this.context = context;
 
-        prefs = new PreferenceManager(context);
+        /**
+         * Object used to fetch application dependencies
+         */
+        PreferenceManager prefs = new PreferenceManager(context);
 
         switch (prefs.getMicrophoneSensitivity()) {
             case "High":

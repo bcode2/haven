@@ -17,7 +17,6 @@
 package org.havenapp.main;
 
 import android.Manifest;
-import android.animation.ValueAnimator;
 import android.app.PictureInPictureParams;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -25,7 +24,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -40,7 +38,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
@@ -177,7 +174,7 @@ public class MonitorActivity extends AppCompatActivity implements TimePickerDial
         preferences = new PreferenceManager(getApplicationContext());
         setContentView(R.layout.activity_monitor);
 
-        txtTimer = (TextView) findViewById(R.id.timer_text);
+        txtTimer = findViewById(R.id.timer_text);
         View viewTimer = findViewById(R.id.timer_container);
 
         int timeM = preferences.getTimerDelay() * 1000;

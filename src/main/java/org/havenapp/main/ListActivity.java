@@ -48,7 +48,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 
 import org.havenapp.main.database.HavenEventDB;
@@ -84,16 +83,14 @@ public class ListActivity extends AppCompatActivity {
 
     private final static int REQUEST_CODE_INTRO = 1001;
 
-    private LiveData<List<Event>> eventListLD;
-
-    private Observer<List<Event>> eventListObserver = events -> {
+    private final Observer<List<Event>> eventListObserver = events -> {
         if (events != null) {
             setEventListToRecyclerView(events);
             observeEvents(events);
         }
     };
 
-    private Observer<Integer> eventCountObserver = count -> {
+    private final Observer<Integer> eventCountObserver = count -> {
         if (count != null && count > events.size()) {
             showNonEmptyState();
         } else if (count != null && count == 0) {
@@ -101,7 +98,7 @@ public class ListActivity extends AppCompatActivity {
         }
     };
 
-    private Observer<Pair<Long, Integer>> eventTriggerCountObserver = pair -> {
+    private final Observer<Pair<Long, Integer>> eventTriggerCountObserver = pair -> {
         if (pair != null && adapter != null && events != null) {
             int pos = -1;
             for (int  i = 0; i < events.size(); i++) {
@@ -116,7 +113,7 @@ public class ListActivity extends AppCompatActivity {
         }
     };
 
-    private BroadcastReceiver dbBroadcastReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver dbBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getIntExtra(DB_INIT_STATUS, 0) == DB_INIT_START) {
@@ -225,7 +222,7 @@ public class ListActivity extends AppCompatActivity {
     private void setEventListToRecyclerView(@NonNull List<Event> events) {
         this.events = events;
 
-        if (events.size() > 0) {
+        if (!events.isEmpty()) {
             findViewById(R.id.empty_view).setVisibility(View.GONE);
         }
 
@@ -242,7 +239,7 @@ public class ListActivity extends AppCompatActivity {
 
     private void fetchEventList() {
         try {
-            eventListLD = HavenEventDB.getDatabase(this).getEventDAO().getAllEventDesc();
+            LiveData<List<Event>> eventListLD = HavenEventDB.getDatabase(this).getEventDAO().getAllEventDesc();
             eventListLD.observe(this, eventListObserver);
         } catch (SQLiteException sqe) {
             Log.d(getClass().getName(), "database not yet initiatied", sqe);

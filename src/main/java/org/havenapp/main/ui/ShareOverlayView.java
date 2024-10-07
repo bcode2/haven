@@ -2,7 +2,6 @@ package org.havenapp.main.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -17,8 +16,6 @@ import org.havenapp.main.R;
  * Created by Alexander Krol (troy379) on 29.08.16.
  */
 public class ShareOverlayView extends RelativeLayout {
-
-   private StfalconImageViewer viewer;
 
     public ShareOverlayView(Context context) {
         super(context);
@@ -37,7 +34,6 @@ public class ShareOverlayView extends RelativeLayout {
 
     public void setImageViewer (StfalconImageViewer viewer)
     {
-        this.viewer = viewer;
     }
 
     private void sendShareIntent() {

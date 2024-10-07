@@ -58,12 +58,12 @@ public class CameraViewHolder {
     /**
      * Object to retrieve and set shared preferences
      */
-    private PreferenceManager prefs;
+    private final PreferenceManager prefs;
 
     private final static int DETECTION_INTERVAL_MS = 200;
     private final static int MAX_CAMERA_WIDTH = 800;
 
-    private List<MotionDetector.MotionListener> listeners = new ArrayList<>();
+    private final List<MotionDetector.MotionListener> listeners = new ArrayList<>();
 
     /**
      * Timestamp of the last picture processed
@@ -92,15 +92,15 @@ public class CameraViewHolder {
      * holder of the CameraView and state of running
      */
     private CameraView cameraView = null;
-    private boolean isCameraStarted = false;
+    private final boolean isCameraStarted = false;
 
 	/**
 	 * Messenger used to signal motion to the alert service
 	 */
 	private Messenger serviceMessenger = null;
 	//private Camera camera;
-	private Activity context;
-	private MotionDetector motionDetector;
+	private final Activity context;
+	private final MotionDetector motionDetector;
 
     private File videoFile;
 
@@ -267,7 +267,7 @@ public class CameraViewHolder {
     private final BlockingQueue<Runnable> mDecodeWorkQueue = new LinkedBlockingQueue<Runnable>();
 
     // Creates a thread pool manager
-    private ThreadPoolExecutor mDecodeThreadPool = new ThreadPoolExecutor(
+    private final ThreadPoolExecutor mDecodeThreadPool = new ThreadPoolExecutor(
             1,       // Initial pool size
             1,       // Max pool size
             10,
@@ -278,15 +278,13 @@ public class CameraViewHolder {
     private final BlockingQueue<Runnable> mEncodeWorkQueue = new LinkedBlockingQueue<Runnable>();
 
     // Creates a thread pool manager
-    private ThreadPoolExecutor mEncodeThreadPool = new ThreadPoolExecutor(
+    private final ThreadPoolExecutor mEncodeThreadPool = new ThreadPoolExecutor(
             1,       // Initial pool size
             1,       // Max pool size
             10,
             TimeUnit.SECONDS,
             mEncodeWorkQueue);
 
-
-    private Matrix mtxVideoRotate;
 
     // recordNewFrame replaced by CameraView's internal android system encoding
 
@@ -323,10 +321,10 @@ public class CameraViewHolder {
     }
 
 
-	private synchronized boolean recordVideo() {
+	private synchronized void recordVideo() {
 
 	    if (doingVideoProcessing)
-	        return false;
+	        return;
         String ts1 = new SimpleDateFormat(Utils.DATE_TIME_PATTERN,
                 Locale.getDefault()).format(new Date());
         File fileStoragePath = new File(Environment.getExternalStorageDirectory(),prefs.getDefaultMediaStoragePath());
@@ -343,7 +341,7 @@ public class CameraViewHolder {
 
         cameraView.takeVideoSnapshot(videoFile);
 
-        mtxVideoRotate = new Matrix();
+        Matrix mtxVideoRotate = new Matrix();
 
         if (cameraView.getFacing() == Facing.FRONT) {
             mtxVideoRotate.postRotate(-cameraView.getRotation());
@@ -360,7 +358,6 @@ public class CameraViewHolder {
             finishVideoEncoding();
         }, seconds);
 
-        return true;
     }
 
 

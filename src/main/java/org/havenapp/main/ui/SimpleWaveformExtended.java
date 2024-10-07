@@ -14,7 +14,6 @@ public class SimpleWaveformExtended extends SimpleWaveform {
 
 
     private int mThreshold = 0;
-    private int lineY;
     private int maxVal = 100; // default max value of slider
 
     public SimpleWaveformExtended(Context context) {
@@ -38,7 +37,7 @@ public class SimpleWaveformExtended extends SimpleWaveform {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         int midY = getHeight()/2;
-        lineY =  midY - (int) (((float) mThreshold/ maxVal) * midY);
-        canvas.drawLine(0,lineY,getWidth(),lineY,peakPencilFirst);
+        int lineY = midY - (int) (((float) mThreshold / maxVal) * midY);
+        canvas.drawLine(0, lineY,getWidth(), lineY,peakPencilFirst);
     }
 }

@@ -26,12 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class BarometerMonitor implements SensorEventListener {
 
     // For shake motion detection.
-    private SensorManager sensorMgr;
-
-    /**
-     * Barometer sensor
-     */
-    private Sensor sensor;
+    private final SensorManager sensorMgr;
 
     /**
      * Last update of the accelerometer
@@ -39,33 +34,20 @@ public class BarometerMonitor implements SensorEventListener {
     private long lastUpdate = -1;
 
     /**
-     * Current accelerometer values
-     */
-    private float accel_values[];
-
-    /**
      * Last accelerometer values
      */
     private float last_accel_values[];
 
-    /**
-     * Data field used to retrieve application prefences
-     */
-    private PreferenceManager prefs;
 
-
-    /**
-     * Text showing accelerometer values
-     */
-    private int maxAlertPeriod = 30;
     private int remainingAlertPeriod = 0;
     private boolean alert = false;
     private final static int CHECK_INTERVAL = 1000;
 
-    private int CHANGE_THRESHOLD = 30; //hPa or mbar
-
     public BarometerMonitor(Context context) {
-        prefs = new PreferenceManager(context);
+        /**
+         * Data field used to retrieve application prefences
+         */
+        PreferenceManager prefs = new PreferenceManager(context);
 
 
 
@@ -73,7 +55,10 @@ public class BarometerMonitor implements SensorEventListener {
                 MonitorService.class), mConnection, Context.BIND_ABOVE_CLIENT);
 
         sensorMgr = (SensorManager) context.getSystemService(AppCompatActivity.SENSOR_SERVICE);
-        sensor = sensorMgr.getDefaultSensor(Sensor.TYPE_PRESSURE);
+        /**
+         * Barometer sensor
+         */
+        Sensor sensor = sensorMgr.getDefaultSensor(Sensor.TYPE_PRESSURE);
 
         if (sensor == null) {
             Log.i("Pressure", "Warning: no barometer sensor");
@@ -98,7 +83,10 @@ public class BarometerMonitor implements SensorEventListener {
                 long diffTime = (curTime - lastUpdate);
                 lastUpdate = curTime;
 
-                accel_values = event.values.clone();
+                /**
+                 * Current accelerometer values
+                 */
+                float[] accel_values = event.values.clone();
 
                 if (alert && remainingAlertPeriod > 0) {
                     remainingAlertPeriod = remainingAlertPeriod - 1;
@@ -110,6 +98,8 @@ public class BarometerMonitor implements SensorEventListener {
 
                     float diffValue = Math.abs(accel_values[0] - last_accel_values[0]);
                     Log.d("Pressure","diff: " + diffValue);
+                    //hPa or mbar
+                    int CHANGE_THRESHOLD = 30;
                     boolean logit = (diffValue > CHANGE_THRESHOLD);
 
                     if (logit) {
@@ -118,6 +108,10 @@ public class BarometerMonitor implements SensorEventListener {
 						 */
 
                         alert = true;
+                        /**
+                         * Text showing accelerometer values
+                         */
+                        int maxAlertPeriod = 30;
                         remainingAlertPeriod = maxAlertPeriod;
 
                         Message message = new Message();
@@ -146,7 +140,7 @@ public class BarometerMonitor implements SensorEventListener {
 
     private Messenger serviceMessenger = null;
 
-    private ServiceConnection mConnection = new ServiceConnection() {
+    private final ServiceConnection mConnection = new ServiceConnection() {
 
         public void onServiceConnected(ComponentName className,
                                        IBinder service) {

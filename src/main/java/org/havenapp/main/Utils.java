@@ -59,7 +59,6 @@ public class Utils {
     /**
      * Get the battery level from the device, from official docs:
      * https://developer.android.com/training/monitoring-device-state/battery-monitoring#MonitorLevel
-     * @param context
      * @return an integer corresponding to the battery percentage without any symbols
      */
     public static int getBatteryPercentage(Context context) {

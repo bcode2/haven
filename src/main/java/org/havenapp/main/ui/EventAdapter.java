@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventVH> {
 
     private List<Event> events;
-    private IResourceManager resourceManager;
+    private final IResourceManager resourceManager;
 
     private OnItemClickListener clickListener;
 

@@ -32,9 +32,7 @@ public class PowerConnectionReceiver extends BroadcastReceiver {
         // avoids lint issue UnsafeProtectedBroadcastReceiver
         if(intent.getAction() == null) return;
         switch(intent.getAction()){
-            case Intent.ACTION_POWER_CONNECTED:
-                break;
-            case Intent.ACTION_POWER_DISCONNECTED:
+            case Intent.ACTION_POWER_CONNECTED, Intent.ACTION_POWER_DISCONNECTED:
                 break;
             default:
                 return;
@@ -60,8 +58,7 @@ public class PowerConnectionReceiver extends BroadcastReceiver {
         boolean acCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_AC;
         boolean wirelessCharge = false;
 
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
-            wirelessCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_WIRELESS;
+        wirelessCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_WIRELESS;
 
         if (usbCharge)
             battStatus = context.getString(R.string.power_source_status_usb);

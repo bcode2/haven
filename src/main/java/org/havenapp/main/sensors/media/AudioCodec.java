@@ -20,10 +20,8 @@ public class AudioCodec {
 
 	/**
 	 * Configures the recorder and starts it
-	 * @throws IOException 
-	 * @throws IllegalStateException 
-	 */
-	public void start() throws IllegalStateException, IOException {
+     */
+	public void start() throws IllegalStateException {
 		if (recorder == null) {
 			minSize = AudioRecord.getMinBufferSize(
 					44100,

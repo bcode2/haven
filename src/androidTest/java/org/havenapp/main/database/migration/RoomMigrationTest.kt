@@ -58,7 +58,7 @@ class RoomMigrationTest {
         SugarDbTestHelper.clearDb(sugarDbOpenHelper!!)
     }
 
-    private fun getMigratedRoomDb(): org.havenapp.main.database.HavenEventDB {
+    private fun getMigratedRoomDb(): HavenEventDB {
         val db = Room.databaseBuilder(ApplicationProvider.getApplicationContext(),
                 org.havenapp.main.database.HavenEventDB::class.java, TEST_DB_NAME)
                 .addMigrations(RoomMigration())

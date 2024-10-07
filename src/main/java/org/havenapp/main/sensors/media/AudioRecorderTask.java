@@ -24,23 +24,17 @@ import java.util.Date;
 import java.util.Locale;
 
 public class AudioRecorderTask extends Thread {
-	
-	/**
-	 * Context used to retrieve shared preferences
-	 */
-	@SuppressWarnings("unused")
-	private Context context;
-	
-	/**
+
+    /**
 	 * Shared preferences of the application
 	 */
-	private PreferenceManager prefs;
+	private final PreferenceManager prefs;
 	
 
 	/**
 	 * Path of the audio file for this instance
 	 */
-	private File audioPath;
+	private final File audioPath;
 
 	/**
 	 * True iff the thread is recording
@@ -58,7 +52,7 @@ public class AudioRecorderTask extends Thread {
 
 	public interface AudioRecorderListener
 	{
-		public void recordingComplete (String path);
+		void recordingComplete(String path);
 	}
 
 	/**
@@ -67,8 +61,10 @@ public class AudioRecorderTask extends Thread {
 	 */
 	protected AudioRecorderTask(Context context) {
 		super();
-		this.context = context;
-		this.prefs = new PreferenceManager(context);
+        /**
+         * Context used to retrieve shared preferences
+         */
+        this.prefs = new PreferenceManager(context);
 		Log.i("AudioRecorderTask", "Created recorder");
 
         File fileFolder = new File(Environment.getExternalStorageDirectory().getPath(),prefs.getDefaultMediaStoragePath());

@@ -26,7 +26,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.havenapp.main.PreferenceManager;
 import org.havenapp.main.R;
@@ -36,7 +35,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import me.angrybyte.numberpicker.listener.OnValueChangeListener;
 import me.angrybyte.numberpicker.view.ActualNumberPicker;
 
 
@@ -45,11 +43,9 @@ public class CameraConfigureActivity extends AppCompatActivity {
 
     private PreferenceManager mPrefManager = null;
 
-    private boolean mIsMonitoring = false;
-    private boolean mIsInitializedLayout = false;
+    private final boolean mIsMonitoring = false;
 
     private CameraFragment mFragment;
-    private ActualNumberPicker mNumberTrigger;
     private TextView mTxtStatus;
 
     @Override
@@ -82,7 +78,7 @@ public class CameraConfigureActivity extends AppCompatActivity {
             }
         });
 
-        mNumberTrigger = findViewById(R.id.number_trigger_level);
+        ActualNumberPicker mNumberTrigger = findViewById(R.id.number_trigger_level);
         mNumberTrigger.setValue(mPrefManager.getCameraSensitivity());
 
         mNumberTrigger.setListener((oldValue, newValue) -> {
@@ -90,7 +86,7 @@ public class CameraConfigureActivity extends AppCompatActivity {
             mPrefManager.setCameraSensitivity(newValue);
             setResult(RESULT_OK);
         });
-        mIsInitializedLayout = true;
+        boolean mIsInitializedLayout = true;
     }
 
     private void switchCamera() {
@@ -109,11 +105,9 @@ public class CameraConfigureActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                mFragment.stopCamera();
-                finish();
-                break;
+        if (item.getItemId() == android.R.id.home) {
+            mFragment.stopCamera();
+            finish();
         }
         return true;
     }

@@ -1,9 +1,5 @@
 package org.havenapp.main;
 
-/**
- * Created by Anupam Das (opticod) on 29/12/17.
- */
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -90,7 +86,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         }
 
         SwitchPreference switchPreference =
-                (SwitchPreference) findPreference(PreferenceManager.REMOTE_NOTIFICATION_ACTIVE);
+                findPreference(PreferenceManager.REMOTE_NOTIFICATION_ACTIVE);
 
         switchPreference.setChecked(preferences.isRemoteNotificationActive());
 
@@ -275,7 +271,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
     private void onRemoteNotificationParameterChange() {
         SwitchPreference switchPreference =
-                (SwitchPreference) findPreference(PreferenceManager.REMOTE_NOTIFICATION_ACTIVE);
+                findPreference(PreferenceManager.REMOTE_NOTIFICATION_ACTIVE);
 
         boolean remoteNotificationActive = canSendRemoteNotification();
         preferences.setRemoteNotificationActive(remoteNotificationActive);
@@ -285,12 +281,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                save();
-                return true;
-            default:
-                break;
+        if (item.getItemId() == android.R.id.home) {
+            save();
+            return true;
         }
 
         return false;
@@ -553,7 +546,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
     String getCountryCode() {
         PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
-        return "+" + String.valueOf(phoneUtil.getCountryCodeForRegion(Locale.getDefault().getCountry()));
+        return "+" + phoneUtil.getCountryCodeForRegion(Locale.getDefault().getCountry());
     }
 
     private void setDefaultStoragePath () {
@@ -774,10 +767,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
     public void checkCallToVerify (View v) {
         Switch callSwitch = v.findViewById(R.id.signalCallSwitch);
-        if (callSwitch != null && callSwitch.isChecked()) {
-            preferences.setVoiceVerification(true);
-        } else {
-            preferences.setVoiceVerification(false);
-        }
+        preferences.setVoiceVerification(callSwitch != null && callSwitch.isChecked());
     }
 }

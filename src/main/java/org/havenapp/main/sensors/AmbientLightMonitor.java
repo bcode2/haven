@@ -26,12 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class AmbientLightMonitor implements SensorEventListener {
 
     // For shake motion detection.
-    private SensorManager sensorMgr;
-
-    /**
-     * Accelerometer sensor
-     */
-    private Sensor sensor;
+    private final SensorManager sensorMgr;
 
     /**
      * Last update of the accelerometer
@@ -39,36 +34,31 @@ public class AmbientLightMonitor implements SensorEventListener {
     private long lastUpdate = -1;
 
     /**
-     * Current accelerometer values
-     */
-    private float current_values[];
-
-    /**
      * Last accelerometer values
      */
     private float last_values[];
 
-    /**
-     * Data field used to retrieve application prefences
-     */
-    private PreferenceManager prefs;
-
     private final static float LIGHT_CHANGE_THRESHOLD = 100f;
 
-    private int maxAlertPeriod = 30;
     private int remainingAlertPeriod = 0;
     private boolean alert = false;
     private final static int CHECK_INTERVAL = 1000;
 
     public AmbientLightMonitor(Context context) {
-        prefs = new PreferenceManager(context);
+        /**
+         * Data field used to retrieve application prefences
+         */
+        PreferenceManager prefs = new PreferenceManager(context);
 
         context.bindService(new Intent(context,
                 MonitorService.class), mConnection, Context.BIND_ABOVE_CLIENT);
 
         sensorMgr = (SensorManager) context.getSystemService(AppCompatActivity.SENSOR_SERVICE);
         //noinspection RedundantCast
-        sensor = (Sensor) sensorMgr.getDefaultSensor(Sensor.TYPE_LIGHT);
+        /**
+         * Accelerometer sensor
+         */
+        Sensor sensor = (Sensor) sensorMgr.getDefaultSensor(Sensor.TYPE_LIGHT);
 
         if (sensor == null) {
             Log.i("AccelerometerFrament", "Warning: no accelerometer");
@@ -91,7 +81,10 @@ public class AmbientLightMonitor implements SensorEventListener {
                 long diffTime = (curTime - lastUpdate);
                 lastUpdate = curTime;
 
-                current_values = event.values.clone();
+                /**
+                 * Current accelerometer values
+                 */
+                float[] current_values = event.values.clone();
 
                 if (alert && remainingAlertPeriod > 0) {
                     remainingAlertPeriod = remainingAlertPeriod - 1;
@@ -103,7 +96,7 @@ public class AmbientLightMonitor implements SensorEventListener {
 
                     boolean isChanged = false;
 
-                    float lightChangedValue = Math.abs(last_values[0]-current_values[0]);
+                    float lightChangedValue = Math.abs(last_values[0]- current_values[0]);
 
                     Log.d("LightSensor","Light changed: " + lightChangedValue);
 
@@ -117,6 +110,7 @@ public class AmbientLightMonitor implements SensorEventListener {
 						 */
 
                         alert = true;
+                        int maxAlertPeriod = 30;
                         remainingAlertPeriod = maxAlertPeriod;
 
                         Message message = new Message();
@@ -145,7 +139,7 @@ public class AmbientLightMonitor implements SensorEventListener {
 
     private Messenger serviceMessenger = null;
 
-    private ServiceConnection mConnection = new ServiceConnection() {
+    private final ServiceConnection mConnection = new ServiceConnection() {
 
         public void onServiceConnected(ComponentName className,
                                        IBinder service) {

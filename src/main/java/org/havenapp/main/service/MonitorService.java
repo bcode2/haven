@@ -16,18 +16,14 @@ import android.app.Service;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.PowerManager;
-import android.telephony.SmsManager;
 import android.text.TextUtils;
 
-import androidx.annotation.RequiresApi;
-import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.havenapp.main.HavenApp;
@@ -121,11 +117,6 @@ public class MonitorService extends Service {
     private PowerManager.WakeLock wakeLock;
 
     /**
-     * Application
-     */
-    private HavenApp mApp = null;
-
-	/**
 	 * Called on service creation, sends a notification
 	 */
     @Override
@@ -133,7 +124,10 @@ public class MonitorService extends Service {
 
         sInstance = this;
 
-        mApp = (HavenApp)getApplication();
+        /**
+         * Application
+         */
+        HavenApp mApp = (HavenApp) getApplication();
 
         mPrefs = new PreferenceManager(this);
 
@@ -150,7 +144,7 @@ public class MonitorService extends Service {
         PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
         wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK,
                 "haven:MyWakelockTag");
-        wakeLock.acquire();
+        wakeLock.acquire(10*60*1000L /*10 minutes*/);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -246,9 +240,7 @@ public class MonitorService extends Service {
 
         if (!mPrefs.getAccelerometerSensitivity().equals(PreferenceManager.OFF)) {
             mAccelManager = new AccelerometerMonitor(this);
-            if(Build.VERSION.SDK_INT>=18) {
-                mBumpMonitor = new BumpMonitor(this);
-            }
+            mBumpMonitor = new BumpMonitor(this);
         }
 
         //moving these out of the accelerometer pref, but need to enable off prefs for them too
@@ -284,9 +276,7 @@ public class MonitorService extends Service {
         // -Value is never set to OFF in the first place
         if (!mPrefs.getAccelerometerSensitivity().equals(PreferenceManager.OFF)) {
             mAccelManager.stop(this);
-            if(Build.VERSION.SDK_INT>=18) {
-                mBumpMonitor.stop(this);
-            }
+            mBumpMonitor.stop(this);
         }
 
         //moving these out of the accelerometer pref, but need to enable off prefs for them too

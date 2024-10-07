@@ -158,7 +158,4 @@
     <string name="hearbeat_message_dialog">Personnalisez le message de notification de battement de cœur. Laissez vide pour utiliser l’émoji de cœur par défaut.</string>
     <string name="hearbeat_monitor_initial_message_1">Moniteur de battements de cœur est activé : vous recevrez une notification toutes les</string>
     <string name="verification_successful">A été confirmée</string>
-    <string name="hint_number" translatable="false">+12125551212</string>
-    <string name="app_name" translatable="false">Refuge</string>
-    <string name="bullets" translatable="false">•••••••</string>
 </resources>

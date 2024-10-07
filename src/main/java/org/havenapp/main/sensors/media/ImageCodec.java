@@ -33,11 +33,7 @@ public class ImageCodec {
 	
 	/**
 	 * Converts a luminance matrix to a RGB grayscale bitmap
-	 * @param lum
-	 * @param width
-	 * @param height
-	 * @return
-	 */
+     */
     public static int[] lumaToGreyscale(int[] lum, int width, int height) {
         if (lum==null) throw new NullPointerException();
         
@@ -57,9 +53,6 @@ public class ImageCodec {
     
     /**
      * Rotates a bitmat of the given degrees
-     * @param bmp
-     * @param degrees
-     * @return
      */
     public static Bitmap rotate(Bitmap bmp, int degrees, boolean reflex) {
         if (bmp==null) throw new NullPointerException();

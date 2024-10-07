@@ -9,12 +9,9 @@ package org.havenapp.main.sensors.motion;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.ImageFormat;
-import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
-import android.os.Handler;
 
 import org.havenapp.main.sensors.media.ImageCodec;
 
@@ -34,11 +31,11 @@ public class MotionDetector {
 	
 	// Input data
 	
-	private List<MotionListener> listeners = new ArrayList<>();
+	private final List<MotionListener> listeners = new ArrayList<>();
 	private int motionSensitivity;
 	// Output data
 
-	private IMotionDetector detector;
+	private final IMotionDetector detector;
 
 	public interface MotionListener {
 		 void onProcess(

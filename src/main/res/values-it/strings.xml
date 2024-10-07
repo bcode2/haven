@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Haven</string>
-    <string name="bullets" translatable="false">•••••••</string>
     <string name="menu_save">Salva</string>
     <string name="menu_about">Imposta…</string>
     <string name="title_activity_start">Haven</string>
@@ -79,7 +77,6 @@
     <string name="settings">Impostazioni</string>
     <string name="remote_access_onion_error">Questa funzione richiede l\'installazione di Orbot: Proxy with Tor per Android.</string>
     <!--Preference Settings -->
-    <string name="hint_number" translatable="false">+3934987654321</string>
     <string name="sms_dialog_summary">Numero di telefono remoto al quale inviare le notifiche</string>
     <string name="sms_dialog_message">Inserisci un numero di telefono al quale inviare le notifiche di allerta</string>
     <string name="signal_dialog_summary">Numero di telefono da cui inviare messaggi tramite Signal</string>
@@ -92,7 +89,6 @@
     <string name="phone_number">Numero per le notifiche (Remoto)</string>
     <string name="sensors">Sensori</string>
     <string name="label_notifications">Notifiche</string>
-    <string name="video_active_preference_key">video_active_preference_key</string>
     <string name="config_video_length_label">Imposta la durata del video di sorveglianza</string>
     <string name="video_monitoring">Videosorveglianza</string>
     <string name="video_settings">Impostazioni video</string>

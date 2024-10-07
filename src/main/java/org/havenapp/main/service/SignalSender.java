@@ -3,11 +3,8 @@ package org.havenapp.main.service;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.CountDownTimer;
-import android.telephony.SmsManager;
 import android.text.TextUtils;
 import android.util.Log;
-
-import net.sourceforge.argparse4j.inf.Namespace;
 
 import org.asamk.signal.Main;
 import org.havenapp.main.PreferenceManager;
@@ -16,9 +13,7 @@ import org.havenapp.main.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.StringTokenizer;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 /**
@@ -27,15 +22,15 @@ import androidx.annotation.Nullable;
 
 public class SignalSender {
 
-    private Context mContext;
+    private final Context mContext;
     private static SignalSender mInstance;
     private String mUsername; //aka your signal phone number
     private CountDownTimer mCountdownTimer;
-    private PreferenceManager preferences;
+    private final PreferenceManager preferences;
     private String messageString;
-    private String prefix;
-    private String suffix;
-    private int interval;
+    private final String prefix;
+    private final String suffix;
+    private final int interval;
     private int mAlertCount;
 
     private SignalSender(Context context, String username)

@@ -29,7 +29,6 @@ import org.havenapp.main.model.EventTrigger;
 public final class CameraFragment extends Fragment {
 
     private CameraViewHolder cameraViewHolder;
-    private ImageView newImage;
     private PreferenceManager prefs;
 
     @Override
@@ -37,7 +36,7 @@ public final class CameraFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.camera_fragment, container, false);
-        newImage = view.findViewById(R.id.new_image);
+        ImageView newImage = view.findViewById(R.id.new_image);
 
         return view;
 

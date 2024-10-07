@@ -13,11 +13,11 @@ import java.io.IOException;
 
 public class MediaRecorderTask  {
 
-    private String mOutputFile;
+    private final String mOutputFile;
     private android.media.MediaRecorder mMediaRecorder;
     private Camera mCamera;
-    private int mSeconds;
-    private SurfaceHolder mHolder;
+    private final int mSeconds;
+    private final SurfaceHolder mHolder;
 
     public MediaRecorderTask(Camera camera, String fileImageDir, int seconds, SurfaceHolder holder) {
         mCamera = camera;

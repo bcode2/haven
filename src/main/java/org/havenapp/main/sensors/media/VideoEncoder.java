@@ -38,15 +38,13 @@ public class VideoEncoder {
     private int mHeight = -1;
     // bit rate, in bits per second
     private int mBitRate = -1;
-    // largest color component delta seen (i.e. actual vs. expected)
-    private int mLargestColorDelta;
 
     private File outputFile = null;
     private MediaCodec mEncoder;
     private MediaMuxer mMuxer;
     private int mTrackIndex;
     private boolean mMuxerStarted;
-    private ArrayList<File> frames;
+    private final ArrayList<File> frames;
 
     public VideoEncoder(ArrayList<File> frames, File outputFile)
     {
@@ -59,7 +57,6 @@ public class VideoEncoder {
      * encoded from a series of byte[] buffers and decoded into Surfaces. The
      * output is checked for validity.
      */
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     public boolean encodeDecodeVideoFromBufferToSurface(int width, int height,
                                                         int bitRate) throws Throwable
     {
@@ -85,12 +82,12 @@ public class VideoEncoder {
      * Tests encoding and subsequently decoding video from frames generated into
      * a buffer.
      */
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     @SuppressLint("InlinedApi")
     public boolean encodeDecodeVideoFromBuffer()
             throws Exception
     {
-        mLargestColorDelta = -1;
+        // largest color component delta seen (i.e. actual vs. expected)
+        int mLargestColorDelta = -1;
         boolean result = true;
         try
         {
@@ -240,7 +237,6 @@ public class VideoEncoder {
     /**
      * Does the actual work for encoding frames from buffers of byte[].
      */
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     @SuppressLint("InlinedApi")
     private boolean doEncodeDecodeVideoFromBuffer(MediaCodec encoder,
                                                   int encoderColorFormat)
@@ -316,7 +312,6 @@ public class VideoEncoder {
      * @param mBufferInfo
      *            the BufferInfo of data from encoder
      */
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     private void drainEncoder(boolean endOfStream, MediaCodec.BufferInfo mBufferInfo)
     {
         final int TIMEOUT_USEC = 10000;
@@ -445,38 +440,6 @@ public class VideoEncoder {
         // Set to zero. In YUV this is a dull green.
         Arrays.fill(frameData, (byte) 0);
 
-        /**
-        Mat mat = Highgui.imread(frames.get(frameIndex).getAbsolutePath());
-
-//		Mat dst = new Mat(mWidth, mHeight * 3 / 2, CvType.CV_8UC1);
-        Mat dst = new Mat();
-        Imgproc.cvtColor(mat, dst, Imgproc.COLOR_RGBA2YUV_I420);
-
-        // use array instead of mat to improve the speed
-        dst.get(0, 0, frameData);
-
-        byte[] temp = frameData.clone();
-        int margin = mHeight / 4;
-        int location = mHeight;
-        int step = 0;
-        for (int i = mHeight; i < mHeight + margin; i++)
-        {
-            for (int j = 0; j < mWidth; j++)
-            {
-                byte uValue = temp[i * mWidth + j];
-                byte vValue = temp[(i + margin) * mWidth + j];
-
-                frameData[location * mWidth + step] = uValue;
-                frameData[location * mWidth + step + 1] = vValue;
-                step += 2;
-                if (step >= mWidth)
-                {
-                    location++;
-                    step = 0;
-                }
-            }
-        }
-         **/
     }
 
     /**

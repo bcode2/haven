@@ -1,9 +1,5 @@
 package org.havenapp.main.ui;
 
-/**
- * Created by n8fr8 on 10/30/17.
- */
-
 
 import android.content.pm.PackageManager;
 import android.os.Bundle;

@@ -22,19 +22,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Use the Significant Motion trigger sensor on API 18+
- *
+ * <p>
  * Created by rockgecko on 27/12/17.
  */
-@TargetApi(18)
 public class BumpMonitor {
 
     // For shake motion detection.
-    private SensorManager sensorMgr;
+    private final SensorManager sensorMgr;
 
     /**
      * Accelerometer sensor
      */
-    private Sensor bumpSensor;
+    private final Sensor bumpSensor;
 
     /**
      * Last update of the accelerometer
@@ -67,7 +66,7 @@ public class BumpMonitor {
         sensorMgr.cancelTriggerSensor(sensorListener, bumpSensor);
         context.unbindService(mConnection);
     }
-    private TriggerEventListener sensorListener = new TriggerEventListener() {
+    private final TriggerEventListener sensorListener = new TriggerEventListener() {
         @Override
         public void onTrigger(TriggerEvent event) {
             Log.i("BumpMonitor", "Sensor triggered");
@@ -104,7 +103,7 @@ public class BumpMonitor {
 
     private Messenger serviceMessenger = null;
 
-    private ServiceConnection mConnection = new ServiceConnection() {
+    private final ServiceConnection mConnection = new ServiceConnection() {
 
         public void onServiceConnected(ComponentName className,
                                        IBinder service) {

@@ -37,8 +37,8 @@ import java.util.Objects;
 
 public class PreferenceManager {
 	
-    private SharedPreferences appSharedPrefs;
-    private Editor prefsEditor;
+    private final SharedPreferences appSharedPrefs;
+    private final Editor prefsEditor;
     
     public static final String LOW = "Low";
     public static final String MEDIUM = "Medium";
@@ -103,7 +103,7 @@ public class PreferenceManager {
     static final String REMOTE_PHONE_NUMBER = "sms_number";
     static final String REMOTE_NOTIFICATION_ACTIVE = "remote_notification_active";
 
-    private Context context;
+    private final Context context;
 	
     public PreferenceManager(Context context) {
         this.context = context;
@@ -124,7 +124,7 @@ public class PreferenceManager {
     /**
      * Returns the Signal username registered. This may not be a good way to check for
      * Signal set up since this may not be verified.
-     *
+     * <p>
      * Usages should be checked with {@link #isSignalVerified()}
      *
      * @see #isSignalVerified()
@@ -145,7 +145,7 @@ public class PreferenceManager {
     /**
      * Returns the Signal username verified. This may not be a good way to check for
      * Signal set up since this may invalidated by a call to register with a different username.
-     *
+     * <p>
      * Usages should be checked with {@link #isSignalVerified()}
      *
      * @see #isSignalVerified()
@@ -422,11 +422,11 @@ public class PreferenceManager {
 
 
     /**
-     * Set the {@link org.havenapp.main.model.Event#startTime} for the ongoing event.
+     * Set the  for the ongoing event.
      * Sets a string with the format {@link Utils#DATE_TIME_PATTERN}
      * representing current date and time for the key {@link #CURRENT_EVENT_START_TIME}.
      *
-     * @param startTime the {@link org.havenapp.main.model.Event#startTime} for an
+     * @param startTime the  for an
      * {@link org.havenapp.main.model.Event}
      */
     public void setCurrentSession(Date startTime) {
@@ -435,7 +435,7 @@ public class PreferenceManager {
     }
 
     /**
-     * Get the {@link org.havenapp.main.model.Event#startTime} for the ongoing event.
+     * Get the  for the ongoing event.
      *
      * @return the string corresponding to pref key {@link #CURRENT_EVENT_START_TIME}.
      * Default value is unknown_session.

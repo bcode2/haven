@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -37,12 +38,12 @@ public class WebServer extends NanoHTTPD {
     public final static int LOCAL_PORT = 8888;
 
     private final static String TAG = "WebServer";
-    private String appTitle = "Haven";
+    private final String appTitle = "Haven";
 
     private String mPassword = null;
     private String mSession = null;
 
-    private Context mContext;
+    private final Context mContext;
 
     public WebServer(Context context, String password) throws IOException {
         super(LOCAL_HOST, LOCAL_PORT);
@@ -159,13 +160,7 @@ public class WebServer extends NanoHTTPD {
         page.append("<meta name = \"viewport\" content = \"user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width\">");
         page.append("</head><body>");
 
-        page.append("<form action=\"/\" method=\"post\">" +
-                "  <div class=\"container\">\n" +
-                "    <label><b>" + mContext.getString(R.string.password) + "</b></label>\n" +
-                "    <input type=\"password\" placeholder=\"Enter Password\" name=\"p\" required>\n" +
-                "\n" +
-                "    <button type=\"submit\">Login</button>\n" +
-                "  </div></form>");
+        page.append("<form action=\"/\" method=\"post\">" + "  <div class=\"container\">\n" + "    <label><b>").append(mContext.getString(R.string.password)).append("</b></label>\n").append("    <input type=\"password\" placeholder=\"Enter Password\" name=\"p\" required>\n").append("\n").append("    <button type=\"submit\">Login</button>\n").append("  </div></form>");
 
         page.append("</body></html>\n");
     }
@@ -252,8 +247,8 @@ public class WebServer extends NanoHTTPD {
     }
 
     private boolean safeEquals (String a, String b) {
-        byte[] aByteArray = a.getBytes(Charset.forName("UTF-8"));
-        byte[] bByteArray = b.getBytes(Charset.forName("UTF-8"));
+        byte[] aByteArray = a.getBytes(StandardCharsets.UTF_8);
+        byte[] bByteArray = b.getBytes(StandardCharsets.UTF_8);
         return MessageDigest.isEqual(aByteArray, bByteArray);
     }
 

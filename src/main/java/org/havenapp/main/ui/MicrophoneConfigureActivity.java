@@ -179,11 +179,8 @@ public class MicrophoneConfigureActivity extends AppCompatActivity implements Mi
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        switch (requestCode) {
-            case 999:
-                startMic();
-                break;
-
+        if (requestCode == 999) {
+            startMic();
         }
 
     }
@@ -249,10 +246,8 @@ public class MicrophoneConfigureActivity extends AppCompatActivity implements Mi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
+        if (item.getItemId() == android.R.id.home) {
+            finish();
         }
         return true;
     }

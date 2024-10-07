@@ -13,6 +13,7 @@ package org.havenapp.main.sensors.media;
 
 import android.content.Context;
 
+import java.io.Serial;
 
 
 public class MicrophoneTaskFactory {
@@ -22,6 +23,7 @@ public class MicrophoneTaskFactory {
 		/**
 		 * 
 		 */
+		@Serial
 		private static final long serialVersionUID = 7030672869928993643L;
 		
 	}

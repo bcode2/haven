@@ -74,7 +74,6 @@
     <string name="settings">設定</string>
     <string name="remote_access_onion_error">この機能は「Orbot: Tor for Android」アプリのインストールが必要です.</string>
     <!--Preference Settings -->
-    <string name="hint_number" translatable="false">+819012345678</string>
     <string name="sms_dialog_summary">通知を送信するリモートの電話番号</string>
     <string name="sms_dialog_message">警報通知を送信するリモートの電話番号を入力</string>
     <string name="signal_dialog_summary">Signalを使用する電話番号</string>
