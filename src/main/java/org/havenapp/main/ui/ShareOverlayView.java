@@ -7,7 +7,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.stfalcon.frescoimageviewer.ImageViewer;
+
+import com.stfalcon.imageviewer.StfalconImageViewer;
 
 import org.havenapp.main.R;
 
@@ -17,7 +18,7 @@ import org.havenapp.main.R;
  */
 public class ShareOverlayView extends RelativeLayout {
 
-    private ImageViewer viewer;
+   private StfalconImageViewer viewer;
 
     public ShareOverlayView(Context context) {
         super(context);
@@ -34,7 +35,7 @@ public class ShareOverlayView extends RelativeLayout {
         init();
     }
 
-    public void setImageViewer (ImageViewer viewer)
+    public void setImageViewer (StfalconImageViewer viewer)
     {
         this.viewer = viewer;
     }
@@ -43,7 +44,8 @@ public class ShareOverlayView extends RelativeLayout {
 
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(viewer.getUrl()));
+        // fix this later
+        //        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(viewer.getUrl()));
         shareIntent.setType("*/*");
         getContext().startActivity(shareIntent);
     }

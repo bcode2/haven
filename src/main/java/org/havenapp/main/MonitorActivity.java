@@ -279,6 +279,7 @@ public class MonitorActivity extends AppCompatActivity implements TimePickerDial
 
     @Override
     public void onPictureInPictureModeChanged (boolean isInPictureInPictureMode, Configuration newConfig) {
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig);
         if (isInPictureInPictureMode) {
             // Hide the full-screen UI (controls, etc.) while in picture-in-picture mode.
             findViewById(R.id.buttonBar).setVisibility(View.GONE);
@@ -383,6 +384,7 @@ public class MonitorActivity extends AppCompatActivity implements TimePickerDial
     @Override
     public void onBackPressed() {
 
+        super.onBackPressed();
         if (mIsMonitoring) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 enterPictureInPictureMode(new PictureInPictureParams.Builder().build());

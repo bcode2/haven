@@ -28,6 +28,7 @@ ehthumbs.db
 Thumbs.db
 *.apk
 *.ap_
+caches*
 
 # Files for the ART/Dalvik VM
 *.dex
@@ -55,6 +56,8 @@ proguard/
 
 # Android Studio Navigation editor temp files
 .navigation/
+wrapper/*
+.tmp
 
 # Android Studio captures folder
 captures/

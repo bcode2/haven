@@ -307,25 +307,19 @@ public class ListActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected (MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.action_settings:
-                startActivity(new Intent(this,SettingsActivity.class));
-                break;
-            case R.id.action_remove_all_events:
-                removeAllEvents();
-                break;
-            case R.id.action_about:
-                showOnboarding();
-                break;
-            case R.id.action_licenses:
-                showLicenses();
-                break;
-            case R.id.action_test_notification:
-                testNotifications();
-                break;
-            case R.id.action_run_cleanup_job:
-                runCleanUpJob();
-                break;
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
+        } else if (itemId == R.id.action_remove_all_events) {
+            removeAllEvents();
+        } else if (itemId == R.id.action_about) {
+            showOnboarding();
+        } else if (itemId == R.id.action_licenses) {
+            showLicenses();
+        } else if (itemId == R.id.action_test_notification) {
+            testNotifications();
+        } else if (itemId == R.id.action_run_cleanup_job) {
+            runCleanUpJob();
         }
         return true;
     }
@@ -362,8 +356,6 @@ public class ListActivity extends AppCompatActivity {
     private void showLicenses ()
     {
         new LibsBuilder()
-                //provide a style (optional) (LIGHT, DARK, LIGHT_DARK_TOOLBAR)
-                .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
                 .withAboutIconShown(true)
                 .withAboutVersionShown(true)
                 .withAboutAppName(resourceManager.getString(R.string.app_name))

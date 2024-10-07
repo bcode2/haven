@@ -2,7 +2,7 @@ package org.havenapp.main.model
 
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.map
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
@@ -22,8 +22,8 @@ class Event {
         set(value) {
             if (value == null) return
             field = value
-            eventTriggerCountLD = Transformations.map(HavenApp.getDataBaseInstance().getEventTriggerDAO()
-                    .getEventTriggerListCountAsync(field)) {
+            eventTriggerCountLD = HavenApp.getDataBaseInstance().getEventTriggerDAO()
+                .getEventTriggerListCountAsync(field).map {
                 Pair(field!!, it)
             }
         }
